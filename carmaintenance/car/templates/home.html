@@ -1,0 +1,108 @@
+{% include 'nav.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+    .home-container {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        padding: 20px
+    }
+
+    .car-reg-btn {
+        border: 1px solid black;
+        padding: 5px 10px;
+        text-decoration-line: none;
+        color: black;
+        float: right
+    }
+
+    .username {
+        font-size: 16px;
+        font-weight: bold;
+        font-style: italic;
+        padding-top: 10px;
+
+    }
+
+    .span {
+        border: 10px
+    }
+</style>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div id="contact" class="contact-area">
+
+
+    <div class="site-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 mb-5" data-aos="fade">
+
+                    <p> Track and Monitor your vehicles repir progress and steps of repair in which it is undergoing at the comfort of your home</p>
+
+                    <a class="btn btn-primary p-2" style="background-color: rgb(41, 109, 165);" href="{% url 'register' %}">Get Started</a>
+                </div>
+                <div class="col-md-5" data-aos="fade" data-aos-delay="100">
+
+                    <div class="">
+                        <img src="{% static 'home.png'%}" width="100%" height="100%" srcset="">
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+
+
+</div>
+
+{% include "services.html" %}
+<div class="home-container">
+    <div>
+        <a href="{% url 'home' %}">All</a>
+    </div>
+    <div>
+        <div>
+            <a href="{% url 'register-car'%}" class="car-reg-btn">Register Car</a>
+
+        </div>
+        <br>
+        <div>
+
+            {% for car in cars %}
+            <div>
+
+                {% if request.user == car.client %}
+                <a href="{% url 'update-car' car.id %}">Edit</a>
+                <a href="{% url 'delete-car' car.id %}">Delete</a>
+
+                {% endif %}
+
+                <span class="username">@{{ car.client.fullname}}</span>
+                <h5>{{car.id}} -- <a href="{% url 'car' car.id %}" title="">{{car.regno}}</a></h5>
+
+                <small>{{car.type}}</small>
+                <hr>
+            </div>
+
+            {% endfor %}
+        </div>
+
+
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,26 @@
+{% include "nav.html" %}
+
+{% block content %}
+
+<style>
+    .form {
+        font-size: 12px;
+    }
+</style>
+
+
+<br>
+<br>
+<br>
+<br>
+{% load widget_tweaks %}
+<div class="form">
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <input type="submit" value="Submit" />
+    </form>
+</div>
+
+{% endblock content %}
