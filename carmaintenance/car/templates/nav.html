@@ -38,7 +38,9 @@
                     <li class="active"><a href="{% url 'home'%}" style="text-decoration: none">Home</a></li>
                     <li><a href="{% url 'about'%} " style="text-decoration: none">About</a></li>
 
+                    <li><a href="{% url 'contact'%}" style="text-decoration: none">Shop</a></li>
                     <li><a href="{% url 'contact'%}" style="text-decoration: none">Contacts</a></li>
+
                     <li><a href="{% url 'services' %}" style="text-decoration: none">Services</a></li>
 
                     <a href="">
@@ -51,7 +53,7 @@
 
                         {% else %}
                         <a class="btn btn-primary p-2"
-                            style="background-color:rgb(41, 109, 165); color:white; font-size: 10;"
+                            style="background-color:rgb(41, 109, 165); color:white; font-size: 10; border-radius: 10px 10px red; border:rgb(41, 109, 165)"
                             href="{% url 'login' %}">Login</a>
 
 
@@ -61,8 +63,10 @@
 
 
                 </ul>
-                <i class="bi bi-list mobile-nav-toggle"></i>
+                <i class="bi bi-list mobile-nav-toggle" ></i>
                 <!-- <button type="submit">Get Started</button> -->
+
+                
 
             </nav><!-- .nav-menu -->
 

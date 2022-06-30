@@ -34,10 +34,10 @@
                 {% csrf_token %}
 
                 <label for="username"></label>
-                <input type="text" name="username" class="form-group m-3" placeholder="Username">
+                <input type="text" name="username" class="form-group m-3" placeholder="Username" required>
                 <br>
                 <label for="password"></label>
-                <input type="password" name="password" class="form-group m-3" placeholder="Password">
+                <input type="password" name="password" class="form-group m-3" placeholder="Password" required>
                 <br>
                 <input type="submit" class="btn py-2 px-8 text-white m-3"
                     style="background-color: black; border-radius: 30px 30px; padding: 2px 2px; width: 15%"
@@ -54,12 +54,17 @@
     <br>
     <br>
 
-    <h3>User Registration Form</h3>
+    {% load crispy_forms_tags %}
     <div class="row text-center">
-        <form action="" method="POST">
+    <h3>User Registration Form</h3>
+
+        <form action="" method="POST" nonvalidate>
             {% csrf_token %}
             <br>
-            {{form.as_p}}
+          
+                {{form|crispy}}
+
+      
             <b>
                 <input type="submit" value="Register" class="btn py-2 px-8 text-white m-3"
                     style="background-color: black; border-radius: 30px 30px; padding: 2px 2px; width: 15%">
