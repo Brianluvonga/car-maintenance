@@ -69,6 +69,12 @@ h1, h2, h3, h4, h5, h6, .font-primary {
 #header.header-scrolled {
   background: rgba(30, 67, 86, 0.8);
   height: 60px;
+  color: white;
+}
+
+#header.header-scrolled .navbar{
+
+  color: white;
 }
 
 #header .logo h1 {

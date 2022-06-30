@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+</body>
+
+</html>
+{% block title %}Cars{% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/nouislider.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/css_style.default.css' %}" id="theme-stylesheet">
+<script src="{% static 'js/nouislider.min.js' %}"></script>
+{% endblock %}
+
+{% block menu %}
+<ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <form class="form-inline my-2 my-lg-0" id="searchbar">
+            <input class="form-control ml-sm-2" type="text" name="search" placeholder="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="submit">Search</button>
+        </form>
+    </li>
+    &nbsp;&nbsp;
+    <li class="nav-item">
+        <a class="nav-link js-scroll-trigger" href="">Compare</a>
+    </li>
+    {% if user.is_authenticated %}
+    <li class="nav-item">
+        <a class="nav-link js-scroll-trigger" href="">Welcome, {{ user.last_name }}</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link js-scroll-trigger" href="{% url 'logout' %}">Logout</a>
+    </li>
+    {% else %}
+    <li class="nav-item">
+        <a class="nav-link js-scroll-trigger" href="{% url 'login' %}">Login</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link js-scroll-trigger" href="{% url 'register' %}">Register</a>
+    </li>
+    {% endif %}
+</ul>
+{% endblock %}
+
+
+{% block body %}
+<section class="hero hero-page gray-bg padding-small">
+    <div class="container">
+        <div class="row d-flex">
+            <div class="col-lg-9 order-2 order-lg-1">
+                <h1>Cars</h1>
+                <p class="lead text-muted">All the available cars in the showroom</p>
+            </div>
+            <div class="col-lg-3 text-right order-1 order-lg-2">
+                <ul class="breadcrumb justify-content-lg-end">
+                    <li class="breadcrumb-item active">cars</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<main>
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar-->
+            <div class="sidebar col-xl-3 col-lg-4 sidebar">
+                <form action="#" id="filter">
+                    <div class="block">
+                        <h6 class="text-uppercase">Car build </h6>
+                        <div class="form-group mb-1">
+                            <input id="all" type="radio" name="make" checked class="radio-template" value="all">
+                            <label for="all">All</label>
+                        </div>
+                        <div class="form-group mb-1">
+                            <input id="hatchback" type="radio" name="make" class="radio-template" value="hatchback">
+                            <label for="hatchback">Hatchback</label>
+                        </div>
+                        <div class="form-group mb-1">
+                            <input id="sedan" type="radio" name="make" class="radio-template" value="sedan">
+                            <label for="sedan">Sedan</label>
+                        </div>
+                        <div class="form-group mb-1">
+                            <input id="suv" type="radio" name="make" class="radio-template" value="suv">
+                            <label for="suv">SUV</label>
+                        </div>
+                        <div class="form-group mb-1">
+                            <input id="muv" type="radio" name="make" class="radio-template" value="muv">
+                            <label for="muv">MUV</label>
+                        </div>
+                    </div>
+                    <div class="block">
+                        <h6 class="text-uppercase">Fuel Type </h6>
+                        <div class="form-group mb-1">
+                            <input id="petrol" type="checkbox" name="fuel" checked class="checkbox-template"
+                                value="petrol">
+                            <label for="petrol">Petrol</label>
+                        </div>
+                        <div class="form-group mb-1">
+                            <input id="diesel" type="checkbox" name="fuel" checked class="checkbox-template"
+                                value="diesel">
+                            <label for="diesel">Diesel</label>
+                        </div>
+                    </div>
+                    <div class="block">
+                        <h6 class="text-uppercase">Filter By Price </h6>
+                        <div id="slider-snap"></div>
+                        <div class="value d-flex justify-content-between">
+                            <div class="min">From &#8377; <span id="slider-snap-value-lower" class="example-val"></span>
+                            </div>
+                            <div class="max">To &#8377; <span id="slider-snap-value-upper" class="example-val"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="filter-submit" onclick="getparams(0,9);">filter</a>
+                </form>
+            </div>
+            <!-- /Sidebar end-->
+            <!-- Grid -->
+            <div class="products-grid col-xl-9 col-lg-8 sidebar-left">
+                <div class="row grid">
+                    <!-- item-->
+                </div>
+
+
+                <br>
+                <nav aria-label="page navigation example" class="d-flex justify-content-center">
+                    <ul class="pagination pagination-custom">
+                        <li class="page-item" id="prev" onclick="previous()"><a href="#" aria-label="Previous"
+                                class="page-link"><span aria-hidden="true">Prev</span><span
+                                    class="sr-only">Previous</span></a></li>
+                        <li class="page-item" id="next" onclick="next()"><a href="#" aria-label="Next"
+                                class="page-link"><span aria-hidden="true">Next</span><span class="sr-only">Next
+                                </span></a></li>
+                    </ul>
+                </nav>
+            </div>
+            <!-- / Grid End-->
+        </div>
+    </div>
+</main>
+{% endblock %}

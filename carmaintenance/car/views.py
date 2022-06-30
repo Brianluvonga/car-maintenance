@@ -1,15 +1,17 @@
 from django.shortcuts import render,redirect
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.forms import UserCreationForm
-from .models import Car,User
+from .models import BookAppointment, Car,User,TestDrive
 from .forms import CarForm
 
 
 # Create your views here.
+
+# USER SECTION
 
 def loginPage(request):
     page = 'login'
@@ -60,6 +62,9 @@ def registerPage(request):
     return render(request, 'login_register.html', {'form':form})
 
 
+# CAR SECTION 
+
+
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     # cars = Car.objects.filter(
@@ -86,6 +91,9 @@ def contactUs(request):
 
 def services(request):
     return render(request, 'services.html')
+
+def arrivals(request):
+    return render(request, 'new_arrivals.html') 
 
 # @login_required(login_url="login")
 def registerCar(request):
@@ -118,6 +126,16 @@ def updateCarDetails(request,pk):
     return render(request,'car_form.html',context)
 
 
+def carDetails(request, pk):
+    car = Car.objects.get(id=pk)
+    form = TestDrive(initial = {'car':car})
+    context = {
+        'car': car,
+        'form': form,
+    }
+    return render(request,'car_info.html',context)
+
+
 # @login_required(login_url="login")
 def deleteCar(request, pk):
     car = Car.objects.get(id=pk)
@@ -127,3 +145,24 @@ def deleteCar(request, pk):
         car.delete()
         return redirect('home')
     return render(request,'delete.html', {'obj': car})
+
+
+def bookAppointment(request,pk):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    user = request.user
+    car = Car.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        try:
+            BookAppointment(
+                user = user,
+                car = car,
+                
+
+            ).save()
+            return HttpResponse("Your Appointment Has Been Booked")
+        except Exception as exc:
+            return HttpResponse("Not Allowed" + exc.message)
+    return HttpResponseForbidden() 

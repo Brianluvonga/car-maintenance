@@ -85,3 +85,41 @@
 </body>
 
 </html>
+
+
+
+{% include "services.html" %}
+<div class="home-container">
+    <div>
+        <a href="{% url 'home' %}">All</a>
+    </div>
+    <div>
+        <div>
+            <a href="{% url 'register-car'%}" class="car-reg-btn">Register Car</a>
+
+        </div>
+        <br>
+        <div>
+
+            {% for car in cars %}
+            <div>
+
+                {% if request.user == car.client %}
+                <a href="{% url 'update-car' car.id %}">Edit</a>
+                <a href="{% url 'delete-car' car.id %}">Delete</a>
+
+                {% endif %}
+
+                <span class="username">@{{ car.client.fullname}}</span>
+                <h5>{{car.id}} -- <a href="{% url 'car' car.id %}" title="">{{car.regno}}</a></h5>
+
+                <small>{{car.type}}</small>
+                <hr>
+            </div>
+
+            {% endfor %}
+        </div>
+
+
+    </div>
+</div>

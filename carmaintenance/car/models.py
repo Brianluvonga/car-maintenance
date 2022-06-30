@@ -50,3 +50,32 @@ class Car(models.Model):
     def __str__(self):
         
         return self.regno
+
+
+class BookAppointment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    appointment_date = models.DateField()
+    approval = models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return self.user.fullname + ' ' + self.car.type
+
+
+class TestDrive(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    time = models.DateField()
+    approved = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.user.fullname + ' ' + ' - ' + self.car.type
+
+
+class Buy(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    car = models.ForeignKey(Car, on_delete=models.SET_NULL, null=True)
+    buytime = models.DateTimeField(auto_now_add=True)
+    amount = models.IntegerField()
+    is_delivered = models.BooleanField(default=False)
